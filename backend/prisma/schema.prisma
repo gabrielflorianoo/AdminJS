@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id        Int      @id @default(autoincrement())
+    name      String
+    email     String   @unique
+    password  String
+    role      Role
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    // Um usuário pode criar ou coordenar várias turmas
+    classes   Class[]  @relation("CoordinatorClasses")
+}
+
+model Student {
+    id          Int          @id @default(autoincrement())
+    name        String
+    email       String?      @unique
+    birthDate   DateTime?
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+    enrollments Enrollment[]
+    attendances Attendance[]
+    grades      Grade[]
+}
+
+model Class {
+    id            Int          @id @default(autoincrement())
+    name          String
+    description   String?
+    responsible   User         @relation("CoordinatorClasses", fields: [responsibleId], references: [id])
+    responsibleId Int
+    startDate     DateTime
+    endDate       DateTime?
+    enrollments   Enrollment[]
+    attendances   Attendance[]
+    grades        Grade[]
+    createdAt     DateTime     @default(now())
+    updatedAt     DateTime     @updatedAt
+}
+
+model Enrollment {
+    id         Int      @id @default(autoincrement())
+    student    Student  @relation(fields: [studentId], references: [id])
+    studentId  Int
+    class      Class    @relation(fields: [classId], references: [id])
+    classId    Int
+    enrolledAt DateTime @default(now())
+
+    @@unique([studentId, classId])
+}
+
+model Attendance {
+    id        Int      @id @default(autoincrement())
+    student   Student  @relation(fields: [studentId], references: [id])
+    studentId Int
+    class     Class    @relation(fields: [classId], references: [id])
+    classId   Int
+    date      DateTime
+    present   Boolean  @default(false)
+    createdAt DateTime @default(now())
+
+    @@unique([studentId, classId, date])
+}
+
+model Grade {
+    id          Int      @id @default(autoincrement())
+    student     Student  @relation(fields: [studentId], references: [id])
+    studentId   Int
+    class       Class    @relation(fields: [classId], references: [id])
+    classId     Int
+    value       Float
+    description String?
+    date        DateTime @default(now())
+
+    @@unique([studentId, classId, date])
+}
+
+enum Role {
+    ADMIN
+    COORDINATOR
+    VOLUNTEER
+}
