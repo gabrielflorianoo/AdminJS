@@ -4,7 +4,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "start": "nodemon -e js,json ./bin/www"
+        "start": "nodemon -e js,json ./bin/www",
+        "build": "prisma generate && prisma migrate deploy"
     },
     "dependencies": {
         "@adminjs/express": "^6.1.1",
