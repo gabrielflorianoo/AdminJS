@@ -6,7 +6,7 @@ import cors from "cors";
 
 dotenv.config();
 
-import { adminRouter, adminJs } from "./admin.js";
+// import { adminRouter, adminJs } from "./admin.js";
 
 // Importação de rotas
 import authRouter from "./routes/auth.js";
@@ -50,7 +50,7 @@ app.use(
 );
 
 // AdminJS
-app.use(adminJs.options.rootPath, adminRouter);
+// app.use(adminJs.options.rootPath, adminRouter);
 
 // Rotas
 app.use("/", indexRouter);
