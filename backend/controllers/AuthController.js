@@ -36,7 +36,7 @@ export async function register(req, res) {
             },
         });
     } catch (error) {
-        res.status(500).json({ error: "Erro ao registrar usuário." });
+        res.status(500).json({ error: "Erro ao registrar usuário.", err: error.message });
     }
 }
 
@@ -69,7 +69,7 @@ export async function login(req, res) {
             message: "Login bem-sucedido.",
         });
     } catch (error) {
-        res.status(500).json({ error: "Erro ao fazer login." });
+        res.status(500).json({ error: "Erro ao fazer login.", err: error.message });
     }
 }
 
@@ -88,7 +88,7 @@ export function authenticateToken(req, res, next) {
         req.user = decoded;
         next();
     } catch (err) {
-        return res.status(403).json({ error: "Token inválido ou expirado." });
+        return res.status(403).json({ error: "Token inválido ou expirado.", err: error.message });
     }
 }
 
