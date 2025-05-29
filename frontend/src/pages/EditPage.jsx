@@ -23,7 +23,7 @@ const EditPage = () => {
 
     React.useEffect(() => {
         api
-            .get(`http://localhost:3000/${type}/${id}`, {
+            .get(`/${type}/${id}`, {
                 withCredentials: true,
             })
             .then((res) => {
@@ -45,11 +45,11 @@ const EditPage = () => {
         e.preventDefault();
         
         api
-            .put(`http://localhost:3000/${type}/${id}`, data, {
+            .put(`/${type}/${id}`, data, {
                 withCredentials: true,
             })
             .then(() => {
-                navigate(`/${type}`);
+                navigate(`${type}`);
             }) // redirect to list page
             .catch((err) => console.error(err));
     };
@@ -90,7 +90,7 @@ const EditPage = () => {
                         <button className="button is-primary" type="submit">
                             Salvar
                         </button>
-                        <button className="button is-light" type="button" onClick={() => navigate(`/${type}`)}>
+                        <button className="button is-light" type="button" onClick={() => navigate(`${type}`)}>
                             Cancelar
                         </button>
                     </div>

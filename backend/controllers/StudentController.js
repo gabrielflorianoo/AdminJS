@@ -14,7 +14,7 @@ export async function getAllStudents(req, res) {
         });
         res.json(students);
     } catch (error) {
-        res.status(500).json({ error: "Erro ao buscar estudantes." });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -34,7 +34,7 @@ export async function getStudentById(req, res) {
             return res.status(404).json({ error: "Estudante não encontrado." });
         res.json(student);
     } catch (error) {
-        res.status(500).json({ error: "Erro ao buscar estudante." });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -51,7 +51,7 @@ export async function createStudent(req, res) {
         });
         res.status(201).json(student);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao criar estudante." });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -70,7 +70,7 @@ export async function updateStudent(req, res) {
         });
         res.json(student);
     } catch (error) {
-        res.status(400).json({ error: "Erro ao atualizar estudante." });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -88,6 +88,6 @@ export async function deleteStudent(req, res) {
         await prisma.student.delete({ where: { id: Number(id) } });
         res.json({ message: "Estudante deletado com sucesso." });
     } catch (error) {
-        res.status(400).json({ error: "Erro ao deletar estudante." });
+        res.status(400).json({ error: error.message });
     }
 }

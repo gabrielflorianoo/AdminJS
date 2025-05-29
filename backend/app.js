@@ -27,27 +27,26 @@ import {
 const app = express();
 
 // Middlewares padrão
+app.use(cors({
+    origin: (origin, callback) => {
+        const allowedOrigins = [
+            "http://localhost:5173",    // Dev server
+            "http://localhost:4173",    // Preview server
+            "https://gabrielflorianoo.github.io"    // Github Pages
+        ];
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+}));
+
 app.use(json());
 app.use(logger("dev"));
 app.use(cookieParser());
 app.use(urlencoded({ extended: false }));
-app.use(
-    cors({
-        origin: (origin, callback) => {
-            const allowedOrigins = [
-                "http://localhost:5173",
-                "https://admin-js-tau.vercel.app",
-                process.env.FRONTEND_URL,
-            ];
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error("Not allowed by CORS"));
-            }
-        },
-        credentials: true,
-    })
-);
 
 // AdminJS
 // app.use(adminJs.options.rootPath, adminRouter);

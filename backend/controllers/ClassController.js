@@ -66,8 +66,7 @@ export const createClass = async (req, res) => {
         });
         res.status(201).json(newClass);
     } catch (error) {
-        res.status(500).json({ error: "Erro ao criar turma." });
-        console.log(error);
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -96,8 +95,7 @@ export const updateClass = async (req, res) => {
         });
         res.json(updatedClass);
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: "Erro ao atualizar turma." });
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -110,7 +108,7 @@ export const deleteClass = async (req, res) => {
         });
         res.status(204).send();
     } catch (error) {
-        res.status(500).json({ error: "Erro ao deletar turma." });
+        res.status(500).json({ error: error.message });
     }
 };
 

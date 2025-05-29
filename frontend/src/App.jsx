@@ -17,7 +17,7 @@ import { PrivateRoute, PublicRoute } from "./utils/RouteGuards"; // supondo que 
 
 function App() {
     return (
-        <Router basename={import.meta.env.MODE === "production" ? "/AdminJS" : "/"}>
+        <Router basename="/AdminJS">
             <AuthProvider>
                 <Header />
 

@@ -12,7 +12,7 @@ export async function getAllAttendances(req, res) {
         });
         res.json(attendances);
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar presenças.' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -29,7 +29,7 @@ export async function getAttendanceById(req, res) {
         if (!attendance) return res.status(404).json({ error: 'Presença não encontrada.' });
         res.json(attendance);
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar presença.' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -46,7 +46,7 @@ export async function createAttendance(req, res) {
         });
         res.status(201).json(newAttendance);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao registrar presença. Verifique se já existe presença para esse aluno, turma e data.' });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -63,7 +63,7 @@ export async function updateAttendance(req, res) {
         });
         res.json(updatedAttendance);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao atualizar presença.' });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -75,6 +75,6 @@ export async function deleteAttendance(req, res) {
         });
         res.json({ message: 'Presença deletada com sucesso.' });
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao deletar presença.' });
+        res.status(400).json({ error: error.message });
     }
 }

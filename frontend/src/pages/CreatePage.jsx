@@ -22,7 +22,7 @@ export default function CreatePage() {
     };
 
     React.useEffect(() => {
-        api.get(`http://localhost:3000/${type}/fields`)
+        api.get(`/${type}/fields`)
             .then((res) => {
                 setFields(res.data);
                 // Inicializa o estado `data` com campos vazios
@@ -48,11 +48,11 @@ export default function CreatePage() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        api.post(`http://localhost:3000/${type}`, data, {
+        api.post(`/${type}`, data, {
             withCredentials: true,
         })
             .then(() => {
-                navigate(`/${type}`);
+                navigate(`${type}`);
             })
             .catch((err) => console.error(err));
     };
@@ -114,7 +114,7 @@ export default function CreatePage() {
                         <button
                             className="button is-light"
                             type="button"
-                            onClick={() => navigate(`/${type}`)}
+                            onClick={() => navigate(`${type}`)}
                         >
                             Cancelar
                         </button>

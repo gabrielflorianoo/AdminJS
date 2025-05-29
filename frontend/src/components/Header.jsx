@@ -1,17 +1,19 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleNavigate = (path) => {
+        navigate(path);
+    };
 
     return (
-        <nav
-            className="navbar is-primary"
-            role="navigation"
-            aria-label="main navigation"
-        >
+        <nav className="navbar is-primary" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
-                <a className="navbar-item" href="/">
+                <a className="navbar-item" onClick={() => handleNavigate("/")}>
                     <strong>Projeto ELLP</strong>
                 </a>
 
@@ -36,47 +38,40 @@ export default function Header() {
 
             <div id="navbarBasic" className="navbar-menu">
                 <div className="navbar-start">
-                    <a href="/classes" className="navbar-item">
+                    <a className="navbar-item" onClick={() => handleNavigate("classes")}>
                         Turmas
                     </a>
 
-                    <a href="/students" className="navbar-item">
+                    <a className="navbar-item" onClick={() => handleNavigate("students")}>
                         Alunos
                     </a>
                 </div>
 
                 <div className="navbar-end">
                     <div className="navbar-item">
-                        <div className="buttons">
-                            {user ? (
-                                <>
-                                    <span className="navbar-item">
-                                        Olá, {user.name}
-                                    </span>
-                                    <button
-                                        className="button is-light"
-                                        onClick={logout}
-                                    >
-                                        Sair
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <a
-                                        href="/login"
-                                        className="button is-light"
-                                    >
-                                        Login
-                                    </a>
-                                    <a
-                                        href="/register"
-                                        className="button is-primary"
-                                    >
-                                        Registrar
-                                    </a>
-                                </>
-                            )}
-                        </div>
+                        {user ? (
+                            <div className="buttons">
+                                <span className="navbar-item">Olá, {user.name}</span>
+                                <button className="button is-light" onClick={logout}>
+                                    Sair
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="buttons">
+                                <button
+                                    className="button is-light"
+                                    onClick={() => handleNavigate("login")}
+                                >
+                                    Login
+                                </button>
+                                <button
+                                    className="button is-link"
+                                    onClick={() => handleNavigate("register")}
+                                >
+                                    Registrar
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

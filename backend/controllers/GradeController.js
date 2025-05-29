@@ -13,7 +13,7 @@ export async function getAllGrades(req, res) {
         });
         res.json(grades);
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar notas.' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -31,7 +31,7 @@ export async function getGradeById(req, res) {
         if (!grade) return res.status(404).json({ error: 'Nota não encontrada.' });
         res.json(grade);
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar nota.' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -50,7 +50,7 @@ export async function createGrade(req, res) {
         });
         res.status(201).json(newGrade);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao registrar nota. Verifique se já existe uma nota com essa data para este aluno e turma.' });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -69,7 +69,7 @@ export async function updateGrade(req, res) {
         });
         res.json(updatedGrade);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao atualizar nota.' });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -82,6 +82,6 @@ export async function deleteGrade(req, res) {
         });
         res.json({ message: 'Nota deletada com sucesso.' });
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao deletar nota.' });
+        res.status(400).json({ error: error.message });
     }
 }

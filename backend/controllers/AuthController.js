@@ -36,7 +36,7 @@ export async function register(req, res) {
             },
         });
     } catch (error) {
-        res.status(500).json({ error: "Erro ao registrar usuário.", err: error.message });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -61,6 +61,7 @@ export async function login(req, res) {
 
         res.cookie("token", token, {
             httpOnly: true,
+            sameSite: "none",
             secure: process.env.NODE_ENV === "production",
             maxAge: 2 * 60 * 60 * 1000, // 2 horas
         });
@@ -69,7 +70,7 @@ export async function login(req, res) {
             message: "Login bem-sucedido.",
         });
     } catch (error) {
-        res.status(500).json({ error: "Erro ao fazer login.", err: error.message });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -82,13 +83,16 @@ export function isLogged(req, res, next) {
 
 export function authenticateToken(req, res, next) {
     const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ error: "Token não fornecido." });
+    }
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
         next();
-    } catch (err) {
-        return res.status(403).json({ error: "Token inválido ou expirado.", err: error.message });
+    } catch (error) {
+        return res.status(403).json({ error: error.message });
     }
 }
 

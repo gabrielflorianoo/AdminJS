@@ -117,7 +117,7 @@ export default function StudentDetailModal({ student, isActive, onClose }) {
                     </button>
                     <button
                         className="button is-link"
-                        onClick={() => navigate(`/edit/students/${student.id}`)}
+                        onClick={() => navigate(`edit/students/${student.id}`)}
                     >
                         ✏️ Editar
                     </button>

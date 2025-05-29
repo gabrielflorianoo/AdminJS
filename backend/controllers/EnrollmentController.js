@@ -13,7 +13,7 @@ export async function getAllEnrollments(req, res) {
         });
         res.json(enrollments);
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar matrículas.' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -31,7 +31,7 @@ export async function getEnrollmentById(req, res) {
         if (!enrollment) return res.status(404).json({ error: 'Matrícula não encontrada.' });
         res.json(enrollment);
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar matrícula.' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -47,7 +47,7 @@ export async function createEnrollment(req, res) {
         });
         res.status(201).json(newEnrollment);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao criar matrícula. Verifique se o aluno já está matriculado nesta turma.' });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -65,7 +65,7 @@ export async function updateEnrollment(req, res) {
         });
         res.json(updatedEnrollment);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao atualizar matrícula.' });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -78,6 +78,6 @@ export async function deleteEnrollment(req, res) {
         });
         res.json({ message: 'Matrícula deletada com sucesso.' });
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao deletar matrícula.' });
+        res.status(400).json({ error: error.message });
     }
 }

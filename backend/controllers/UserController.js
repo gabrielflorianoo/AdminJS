@@ -9,7 +9,7 @@ export async function getAllUsers(req, res) {
         const users = await prisma.user.findMany();
         res.json(users);
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar usuários.' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -21,7 +21,7 @@ export async function getUserById(req, res) {
         if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
         res.json(user);
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao buscar usuário.' });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -37,7 +37,7 @@ export async function createUser(req, res) {
         });
         res.status(201).json(user);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao criar usuário.' });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -54,7 +54,7 @@ export async function updateUser(req, res) {
         });
         res.json(user);
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao atualizar usuário.' });
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -65,6 +65,6 @@ export async function deleteUser(req, res) {
         await prisma.user.delete({ where: { id: Number(id) } });
         res.json({ message: 'Usuário deletado com sucesso.' });
     } catch (error) {
-        res.status(400).json({ error: 'Erro ao deletar usuário.' });
+        res.status(400).json({ error: error.message });
     }
 }
